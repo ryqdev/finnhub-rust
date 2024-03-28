@@ -21,7 +21,7 @@ impl FinnClient {
 }
 
 #[derive(Debug, serde::Deserialize)]
-struct QuoteResponse {
+pub struct QuoteResponse {
     current_price: String,
     change: String,
     percent_change: String,
