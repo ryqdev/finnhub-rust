@@ -1,4 +1,3 @@
-workspace = { members = ["src/client"] }
 [package]
 name = "finnhub-rust"
 version = "0.1.2"
