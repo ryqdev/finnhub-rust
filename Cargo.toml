@@ -10,3 +10,5 @@ authors = ["ryqdev"]
 # See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
 
 [dependencies]
+reqwest = {version = "0.12.2", features = ["blocking", "json"] }
+serde = { version = "1.0.197", features = ["derive"] }
