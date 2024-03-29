@@ -13,20 +13,31 @@ impl FinnClient {
         "pong".to_string()
     }
 
-    pub fn quote(self, symbol: &str) -> Result<QuoteResponse, reqwest::Error> {
+    pub async fn quote(self, symbol: &str) -> Result<QuoteResponse, reqwest::Error> {
+        let client = reqwest::Client::new();
         let url = format!("https://finnhub.io/api/v1/quote?symbol={}&token={}", symbol, self.api_key);
-        let response = reqwest::blocking::get(&url)?.json::<QuoteResponse>()?;
-        Ok(response)
+        let response = client
+            .get(url)
+            .send()
+            .await
+            .unwrap()
+            .text()
+            .await
+            .unwrap();
+
+        let parsed_response: QuoteResponse = serde_json::from_str(&response).unwrap();
+        Ok(parsed_response)
     }
 }
 
 #[derive(Debug, serde::Deserialize)]
 pub struct QuoteResponse {
-    current_price: String,
-    change: String,
-    percent_change: String,
-    high_price: String,
-    low_price: String,
-    open_price: String,
-    previous_close_price: String,
+    pub c: f64,
+    pub d: f64,
+    pub dp: f64,
+    pub h: f64,
+    pub l: f64,
+    pub o: f64,
+    pub pc: f64,
+    pub t: i64,
 }
