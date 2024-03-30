@@ -41,3 +41,17 @@ pub struct QuoteResponse {
     pub pc: f64,
     pub t: i64,
 }
+
+
+#[cfg(test)]
+mod tests {
+    use super::*;
+
+    #[tokio::test]
+    async fn quote_test() {
+        let api_key = "cg9cnopr01qk68o82q1gcg9cnopr01qk68o82q20".to_string();
+        let client = FinnClient::new(api_key);
+        let resp = client.quote("AAPL").await.unwrap();
+        println!("{:?}", resp)
+    }
+}
